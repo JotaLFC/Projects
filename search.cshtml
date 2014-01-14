@@ -1,0 +1,110 @@
+@model RfpGridModel
+<style type="text/css">
+    .daterange-container .select2-choice span { font-size: 12px;margin-right: 20px;}
+</style>
+<div class="ad-search">
+    <div class="ad-search-content">
+        <div class="field include-drafts-container">                       
+            <label class="include-drafts-label" for="IncludeDrafts">Include Drafts</label>
+            <input class="include-drafts-input" id="IncludeDrafts" type="checkbox" checked="checked" tabindex="1" >                      
+        </div>            
+        <div class="field daterange-container">
+            <label class="rfp-saf-label" for="DateRange">Date Range</label>
+            <select id="DateRange" class="select2-control select2-small-control" style="width: 86px;" data-placeholder="Modified" tabindex="2">                          
+                <option id="ModifiedOn">Modified</option>
+                <option id="CreatedOn">Created</option>
+            </select>
+            <div class="daterange-calendar-area">
+                <div class="calendar-field"><input id="StartDate" class="calendar-text-box startDate" name="StartDate" tabindex="3" /><div class="ad-search-calendar-icon-default calendarStart"></div></div>
+                <div class="calendar-field"><input id="EndDate" class="calendar-text-box endDate" name="EndDate" tabindex="4"/><div class="ad-search-calendar-icon-default calendarEnd"></div></div>              
+            </div>
+        </div>
+        <div class="field flight-container">
+            <label class="flight-label">Flight Incl.</label><div class="flight-calendar-field"><input id="FlightStartDate" class="calendar-text-box flight-startDate" name="FlightStartDate" placeholder="&nbsp;&nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; /" tabindex="5"><div class="ad-search-calendar-icon-default calendarFlightStart"></div></div>
+            <div class="flight-calendar-field"><input id="FlightEndDate" class="calendar-text-box flight-endDate" name="FlightEndDate" placeholder="&nbsp;&nbsp; &nbsp; &nbsp; / &nbsp; &nbsp; /" tabindex="6" /><div class="ad-search-calendar-icon-default calendarFlightEnd"></div></div>
+        </div>                       
+        <div class="field"> 
+            <div class="horizontal-line"></div>
+        </div>  
+        <div class="field">
+            <label class="rfp-saf-label" for="">Name</label>
+            <input type="text" id="Name" class="text-box-longer" maxlength="255" tabindex="7" />
+        </div>
+        <div class="additional-criteria">
+            <div class="field">
+                <label class="rfp-saf-label" for="">Advertiser Common Name<span class="clear-positioning local-clear-button local-clear-button:hover" data-for="CommonAdvertiser"></span></label>                    
+                <div id="CommonAdvertiser" class="select2-ajax-control" tabindex="8"></div>
+            </div>
+            <div class="field">
+                <label class="rfp-saf-label" for="">Account Executive<span class="clear-positioning local-clear-button local-clear-button:hover" data-for="AccountExecutive"></span></label>
+                <select id="AccountExecutive" class="select2-control" multiple="multiple" data-placeholder="Search by Account Executive" tabindex="9" style="display: none;">                            
+                    @if (Model.AccountExecutives != null) {
+                        foreach (var accountExec in Model.AccountExecutives) {
+                            <option value="@accountExec.Id">@Html.Raw(Html.Encode(accountExec.Description).Replace("#", @"\\\\#"))</option>
+                        }
+                    }
+                </select> 
+            </div>
+            <div class="field ad-scroll-container">
+                <label class="rfp-saf-label" for="">Buying Agency<span class="clear-positioning local-clear-button local-clear-button:hover" data-for="BuyingAgency"></span></label>
+                <div id="BuyingAgency" class="select2-ajax-control" tabindex="10"></div>
+            </div>
+            <div class="field">
+                <label class="rfp-saf-label" for="">Media Type<span class="clear-positioning local-clear-button local-clear-button:hover" data-for="MediaType"></span></label>         
+                <select id="MediaType" multiple="multiple" class="select2-control" data-placeholder="Search by Media Type" tabindex="11">
+                    @if (Model.MediaTypes != null) {
+                        foreach (var mediaType in Model.MediaTypes) {
+                            <option value="@mediaType.Id">@mediaType.Description</option>
+                        }
+                    }
+                    <option value="0">Multimedia</option>
+                </select>
+            </div>
+            <div class="field">
+                <label class="rfp-saf-label" for="">Marketplace<span class="clear-positioning local-clear-button local-clear-button:hover" data-for="Marketplace"></span></label>         
+                <select id="Marketplace" multiple="multiple" class="select2-control" data-placeholder="Search by Marketplace" tabindex="12">
+                    @if (Model.Marketplaces != null) {
+                        foreach (var marketplace in Model.Marketplaces) {
+                            <option value="@marketplace.Id">@marketplace.Description</option>
+                        }
+                    }
+                    <option value="0">Multiple</option>
+                </select>
+            </div>
+            <div class="field">
+                <label class="rfp-saf-label" for="">Status<span class="clear-positioning local-clear-button local-clear-button:hover" data-for="ProposalStatus"></span></label>         
+                <select id="ProposalStatus" multiple="multiple" class="select2-control" data-placeholder="Search by Status" tabindex="13">
+                    @if (Model.ProposalStatuses != null) {
+                        foreach (var status in Model.ProposalStatuses) {
+                            <option value="@status.Id">@status.Description</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="ad-search-filter-content display_hidden">           
+        <div class="field">
+            <label for="" class="rfp-saf-label"><span>Advertiser Common Name</span><span class="clear-positioning local-clear-button local-clear-button:hover" data-for="AdvertiserFilter"></span></label>
+            <select id="AdvertiserFilter" name="AdvertiserFilter" class="select2-control" multiple="multiple" data-placeholder="Filter by Advertiser Common Name" tabindex="100"></select>
+        </div>
+        <div class="field">
+            <div class="field-buttonset-container"><label for="MarketplaceFilter" class="checkbox-label">Marketplace</label>   
+                <div id="MarketplaceFilter" class="marketplacefilterbox" tabindex="101"></div>                    
+            </div>  
+        </div>
+        <div class="field">
+            <div class="field-buttonset-container"><label for="StatusFilter" class="checkbox-label">Status</label>                      
+                <div id="StatusFilter" class="statusfilterbox" tabindex="102"></div>          
+            </div>
+        </div>
+        <div class="field field_hieght">
+            <label for="BudgetRange" class="slider-label-budget">Budget Total</label>                        
+            <div id="BudgetRange" class="filter-slider-budget slider-control" tabindex="103"></div>        
+        </div>
+        <div class="field field_hieght">
+            <label for="FlightRange" class="slider-label-flight">Flight Range</label>                
+            <div id="FlightRange" class="filter-slider-flight slider-control" tabindex="104"></div>        
+        </div>                  
+    </div>
+</div> 
