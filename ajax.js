@@ -1,45 +1,37 @@
-$('#' + id + ' .content1').bind('click', function (e) {
-    e.preventDefault();
-    getContent('/function-demos/functions/ajax/data/content1.html');
-});
- 
-$('#' + id + ' .content2').bind('click', function (e) {
-    e.preventDefault();
-    getContent('/function-demos/functions/ajax/data/content2.html');
-});
- 
-$('#' + id + ' .content3').bind('click', function (e) {
-    e.preventDefault();
-    getContent('/function-demos/functions/ajax/data/content3.html');
-});
- 
-function getContent(filename) {
-    $.ajax({
-        url: filename,
-        type: 'GET',
-        dataType: 'html',
-        beforeSend: function () {
-            $('#' + id + ' .contentarea').html('<img src="/function-demos/functions/ajax/images/loading.gif">');
-        },
-        success: function (data, textStatus, xhr) {
- 
-            if (filename == '/function-demos/functions/ajax/data/content3.html') {
-                setTimeout(function () {
-                    $('#' + id + ' .contentarea').html(data);
-                }, 2000);
-            } else {
-                $('#' + id + ' .contentarea').html(data);
-            }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            $('#' + id + ' .contentarea').html(textStatus);
-        }
-    });
-}
-Code to Reset
+//AJAX 'GET'
 
-?
-1
-2
-$('#' + id + ' .contentarea').html('Content will appear here.');
-$('#' + id).hide();
+$.ajax({
+  url: 'getTwitterFollowers.php',
+  type: 'GET',
+  data: 'twitterUsername=jquery4u',
+  success: function(data) {
+    //called when successful
+    $('#ajaxphp-results').html(data);
+  },
+  error: function(e) {
+    //called when there is an error
+    //console.log(e.message);
+  }
+});
+
+
+//AJAX 'POST"
+
+var $form = $("#myForm");
+    var url = $form.attr("action") + "?" + $form.serialize();
+    $("#" + id).html(url);
+
+$.ajax({
+    type: "POST",
+    url: action,
+    data: $form,
+    success: function(response)
+    {
+      if(response == 'success')
+            $("#myForm").slideUp('slow', function() {
+                $("#msg").html("<p class='success'>You have logged in successfully!</p>");
+            });
+      else
+            $("#msg").html("<p class='error'>Invalid username and/or password.</p>");
+    }
+});
