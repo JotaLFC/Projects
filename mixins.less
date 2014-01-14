@@ -1,0 +1,184 @@
+
+// variables
+@ad-sales-command-button-height: 37px;
+@ad-sales-secondary-link-height: 20px;
+@ad-font-family: 'Source Sans Pro';
+@ad-search-toolbar-new-button-width: 96px;
+@button-container-background: #75a1a7;
+@modal-header-background: #75A1A7;
+
+// mixins
+.ad-sales-sprite(@x-coordinate, @y-coordinate) {
+  background-image: url('../../../Images/ESPN/advisor_icon_sprite.png');
+  background-position: @x-coordinate @y-coordinate, center;
+}
+
+.truncate(@width: 410px, @white-space: nowrap) {
+  max-width: @width;
+  white-space: @white-space;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ad-sales-input-button(@button-width: 95px) {
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
+  color: #2d8c9d;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: inherit;
+  height: 35px;
+  width: @button-width;
+  max-width: @button-width;
+}
+
+.ad-sales-center-in-container(@width, @elementHeight) {
+  position: relative;
+  width: @width;
+  left: 50%;
+  margin-left: -(.5 * @width);
+  top: 50%;
+  margin-top: -(.5 * @elementHeight);
+}
+
+// global styles
+.ad-toolbar-search-new-button {
+  min-width: @ad-search-toolbar-new-button-width;
+  height: 30px;
+  border-radius: 2px;
+  background: #fff;
+  background-color: #FFFFFF;
+  color: #515151;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.ad-toolbar-search-new-button:hover {
+  .ad-toolbar-search-new-button-icon {
+    .ad-sales-sprite(630px, 0px);
+    background-color: #e1f3e1;
+  }
+}
+
+.ad-toolbar-search-new-button-text {
+  float: left;
+  margin: 5px 5px 5px (@ad-search-toolbar-new-button-width / 4);
+  font-size: 14px;
+  font-family: @ad-font-family;
+  line-height: 20px;
+}
+
+.ad-toolbar-search-new-button-icon {
+  .ad-sales-icon-size;
+  .ad-sales-sprite(540px, 0px);
+  background-color: #ebebeb;
+  float: right;
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.disabled-ad-toolbar-search-new-button, .disabled-ad-toolbar-search-new-button:hover {
+  cursor: default;
+  color: #a7a7a7;
+
+  .ad-toolbar-search-new-button-icon {
+    .ad-sales-sprite(570px, 0px);
+    background-color: #ebebeb;
+  }
+}
+
+.ad-sales-icon-size {
+  height: 30px;
+  width: 30px;
+}
+
+.ad-sales-command-button {
+  width: 80px;
+  height: @ad-sales-command-button-height;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  color: white;
+  background-color: #69c8bc;
+  border-radius: 2px;
+  border: 0;
+}
+
+.ad-sales-command-button:hover {
+  background-color: #60b2a8;
+}
+
+.ad-sales-secondary-link {
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ad-sales-secondary-link:hover {
+  color: #6EFFFE;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.ad-scroll-container {
+  overflow: auto;
+  height: 100%;
+}
+
+.ad-webkit-scrollbar {
+  width: 8px;
+}
+.ad-scroll-container::-webkit-scrollbar {
+  .ad-webkit-scrollbar;
+}
+
+.ad-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 30px #e1e1e1;
+  border-radius: 10px;
+}
+.ad-scroll-container::-webkit-scrollbar-track {
+  .ad-webkit-scrollbar-track;
+}
+
+.ad-webkit-scrollbar-track-piece {
+  -webkit-box-shadow: inset 0 0 30px #e1e1e1;
+  border-radius: 10px;
+}
+.ad-scroll-container::-webkit-scrollbar-track-piece {
+  .ad-webkit-scrollbar-track-piece;
+}
+
+.ad-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 30px #818181;
+  border-radius: 10px;
+}
+.ad-scroll-container::-webkit-scrollbar-thumb {
+  .ad-webkit-scrollbar-thumb;
+}
+
+.input-validation-error {
+  border: 1px solid #d52016 !important;
+  background-color: #fae6e7 !important;
+  color: #c02c34 !important;
+}
+
+.field-validation-error {
+  color: #c02c34;
+}
+
+.ad-invalid-input {
+    border: 1px solid #ca0813 !important;
+    background-color: #fee5e5 !important;
+    color: #9b0d13 !important;    
+}
+
