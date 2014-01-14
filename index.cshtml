@@ -1,0 +1,90 @@
+@{
+    Layout = "~/Views/Shared/_AdVisorLayout.cshtml";
+    ViewBag.Title = "Ad>Visor Proposal Homepage";
+}
+@section head
+{        
+    <link href="~/Assets/Css/HomePanel.css?v=@Html.TimeStamp()" rel="stylesheet" type="text/css" />
+    <link href="~/Assets/Css/SearchPanel.css?v=@Html.TimeStamp()" rel="stylesheet" type="text/css" /> 
+}
+@section scripts
+{  
+    <script type="text/javascript">
+        window.ajaxUrls = @JsonModel.Convert(ViewBag.AjaxUrlObject);
+        window.imageUrl = "@Url.Content("~/Assets/Images/")";        
+    </script>
+    <script type="text/javascript" src="~/Assets/Scripts/Libs/jquery.isotope.min.js"></script>
+    <script type="text/javascript" src="~/Assets/Scripts/Libs/search-filter-widget.js?v=@Html.TimeStamp()"></script>   
+    <script type="text/javascript" src="~/Assets/Scripts/Libs/rangeSliders.min.js"></script>
+    <script type="text/javascript" src="~/Assets/Scripts/Views/homeIsotope.js?v=@Html.TimeStamp()"></script>        
+}
+              
+@* Search Summary Section *@
+<div id="global-messaging">
+    <div class="managed-deal"><img alt="managed deal" src="~/Assets/Images/briefcase.png"/></div>
+    <div class="managed-deal-text">Manage Deals&nbsp;<span id="resultCount" style="font-weight: normal;"></span></div>
+    <div id="StatusLine"></div>
+</div>
+<section id="main">
+    <div id="mainContainer">
+        @Html.Partial("Toolbar",new ToolbarOptions())
+        @Html.Partial("SearchFilter")                
+        <div id="mainContent" class="main-content-collapsed">    
+            <div id="ContentPanel">   
+                <div id="TileContainer" data-bind="template: { foreach: items, afterAdd: onItemAdded }" style="visibility: hidden;/*height:1243px !important;*/">
+                    <div class="item tile-panel" data-bind="css: tileGrid.getStatusClassName(ProposalStatus) ">
+                        <div class="deal-name" data-bind="text: Name, attr: { title: Name }"></div>
+                        <div class="tile-content" data-bind="attr:{'data-id': Id, 'data-modified': ModifiedOn, 'data-advertiserid': CommonAdvertiserId, 'data-advertiser': CommonAdvertiser, 'data-budgettype': budgetType(), 'data-budgetgross': GrossTotal, 'data-budgetnet': NetTotal, 'data-budgetgrp': GrpTotal, 'data-start': FlightStart,'data-end': FlightEnd,'data-mediatype': MediaType, 'data-marketplaceid': MarketPlaceId, 'data-statusid': ProposalStatusId }">
+                            <div class="tile-id-area">
+                                <div class="common-name" data-bind="text: Id + '&nbsp;-&nbsp;' + CommonAdvertiser, attr: { 'title': CommonAdvertiser, 'data-id': Id }"></div>
+                                <div class="dotted-line"><img alt="dotted line" src="~/Assets/Images/dot.png" /></div>  
+                            </div>
+                            <div class="gross-budget-container" data-bind="visible: budgetType() === 'gross'">
+                                <div class="total-budget-gross" data-bind="text: GrossTotalFormatted"></div>
+                                <div class="gross-area">
+                                    <div class="gross">Gross</div>
+                                    <div class="net">Net</div>
+                                    <div class="grp">GRP</div>
+                                </div>
+                            </div>
+                            <div class="net-budget-container" data-bind="visible: budgetType() === 'net'">
+                                <div class="total-budget-net" data-bind="text: NetTotalFormatted"></div>
+                                <div class="net-area">
+                                    <div class="gross">Gross</div>
+                                    <div class="net">Net</div>
+                                    <div class="grp">GRP</div>
+                                </div>
+                            </div>
+                            <div class="grp-budget-container" data-bind="visible: budgetType() === 'grp'">
+                                <div class="total-budget-grp" data-bind="text: GrpTotalFormatted"></div>
+                                <div class="grp-area">
+                                    <div class="gross">Gross</div>
+                                    <div class="net">Net</div>
+                                    <div class="grp">GRP</div>
+                                </div>
+                            </div>
+                            <div class="marketplace" data-bind="text: MarketPlace"></div>
+                            <div class="status-draft">
+                                <div id="#status" data-bind="text: ProposalStatus.toUpperCase(), attr: { class: 'status-' + ProposalStatus.toLowerCase()[0] }"></div>                                                                                 
+                            </div>                                                                                                                     
+                            <div class="flight-date-range" data-bind="text: FlightRange"></div>
+                            <div id="#draft" title="Draft" class="draft-icon draft" data-bind="visible: HasDraft"></div>                                 
+                            <img src="~/Assets/Images/dude.png" alt="Dude" title="My deal" class="my-deal-indicator" data-bind="visible: IsOwner" />                            
+                        </div>
+                        <div class="tile-footer">
+                            <img src="~/Assets/Images/tv-sprite.png" alt="tv icon" data-bind="attr: { src: tileGrid.getMediaIcon(MediaType), title: MediaType, class: 'icon-type-' + MediaType.toLowerCase() }" />
+                            <div data-bind="text: MediaType, attr: { class: 'media-type-' + MediaType.toLowerCase() }"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</section>
+<img id="Loading" class="loading-indicator" src="~/Assets/Images/loading-big.gif" alt="Loading..." />
+@if (Convert.ToBoolean(TempData["RfpNotFound"])) {
+<script type="text/javascript">
+    toastr.error("Deal could not be found");
+</script>
+}
